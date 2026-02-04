@@ -40,33 +40,26 @@ const App: React.FC = () => {
 
       {/* 1. HERO SECTION */}
       <section className="relative pt-24 pb-20 px-6 md:px-12 max-w-7xl mx-auto flex flex-col items-center text-center">
-        <Badge icon={AlertCircle}>ATENÇÃO EMPRESÁRIOS COM +1 MILHÃO EM DÍVIDAS FEDERAIS</Badge>
+        <Badge icon={AlertCircle}>ATENÇÃO EMPRESÁRIOS!</Badge>
         
         <h1 className="mt-8 text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight">
           Se sua empresa paga parcelamentos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold to-[#fff]">dívidas tributárias federais…</span>
         </h1>
         
         <p className="mt-6 text-lg md:text-xl max-w-3xl text-neutral-300 font-light leading-relaxed">
-          Você pode estar pagando muito mais do que deveria por um erro <strong className="text-white font-semibold">CRASSO</strong> da Receita. Veja neste vídeo como reduzir em 30% ou mais o valor das suas parcelas e saldo devedor total através da correção desse erro de cálculo.
+          Você pode estar pagando <strong className="text-white font-semibold">MUITO MAIS</strong> do que deveria por um <strong className="text-white font-semibold">ERRO DE CÁLCULO</strong>. É possível <strong className="text-white font-semibold">REDUZIR 30% do SALDO DEVEDOR e PARCELA MENSAL</strong> (no mínimo) através de um método pouco conhecido que revelamos nesse vídeo.
         </p>
 
-        {/* Video Placeholder */}
-        <div className="mt-12 w-full max-w-4xl aspect-video rounded-2xl overflow-hidden relative group cursor-pointer shadow-[0_0_50px_-15px_rgba(197,160,101,0.2)] border border-white/10">
-           {/* Placeholder Image */}
-           <img 
-            src="https://picsum.photos/1280/720?grayscale&blur=2" 
-            alt="Video Thumbnail" 
-            className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm group-hover:bg-black/40 transition-all">
-            <div className="w-20 h-20 rounded-full bg-brand-gold/20 flex items-center justify-center border border-brand-gold/50 text-brand-gold group-hover:scale-110 transition-transform">
-              <Play fill="currentColor" size={32} className="ml-1" />
-            </div>
-          </div>
-          <div className="absolute bottom-4 left-4 right-4 flex justify-between text-xs font-mono text-neutral-400">
-            <span>REVISÃO TRIBUTÁRIA</span>
-            <span>07:00</span>
-          </div>
+        {/* Video Embed */}
+        <div className="mt-12 w-full max-w-4xl aspect-video rounded-2xl overflow-hidden relative shadow-[0_0_50px_-15px_rgba(197,160,101,0.2)] border border-white/10">
+          <iframe 
+            className="w-full h-full" 
+            src="https://www.youtube.com/embed/Ry14yL7-a3E?si=4nm_N2MoWUMuI56j" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowFullScreen
+          ></iframe>
         </div>
 
         <div className="mt-10 w-full max-w-md">
@@ -77,50 +70,29 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. BELIEVABILITY STRIP */}
-      <section className="border-y border-white/5 bg-off-black/50 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto py-10 px-6">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-neutral-500 mb-8">
-            Empresas que reduziram milhões em seus parcelamentos com nosso método
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-             {/* Text Logos for visual consistency if real assets aren't provided */}
-             <span className="text-lg font-bold text-white">Frango Americano</span>
-             <span className="text-lg font-bold text-white">Y Watanabe</span>
-             <span className="text-lg font-bold text-white">Vale do Rio Doce</span>
-             <span className="text-lg font-bold text-white">Município de Parnaíba</span>
-             <span className="text-lg font-bold text-white">Hospital Evangélico Goiano</span>
-          </div>
-          <div className="flex justify-center mt-8">
-            <Badge icon={ShieldCheck}>
-              Dias Advocacia — 15+ anos | Resultados comprovados em PA, MT, SP, PE
-            </Badge>
-          </div>
-        </div>
-      </section>
-
       {/* 3. PROBLEMA SECTION */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
           <div>
-            <GlassCard fullHeight className="relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <GlassCard fullHeight className="relative overflow-hidden border-brand-gold/20 !bg-black/40">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-[80px] -z-10 pointer-events-none" />
               
-              <h3 className="text-lg md:text-xl font-bold text-white mb-8 uppercase tracking-wider flex items-center gap-4">
-                 <span className="w-1 h-8 bg-brand-gold rounded-full block shadow-[0_0_15px_rgba(197,160,101,0.6)]"></span>
-                 <span>Se você responder <span className="text-brand-gold text-glow">SIM</span> a estas perguntas, continue lendo</span>
-              </h3>
+              <div className="border-l-4 border-brand-gold pl-6 mb-8 py-2">
+                 <h3 className="text-lg md:text-xl font-bold text-white uppercase tracking-wider leading-relaxed">
+                   Se você responder <span className="text-brand-gold text-glow underline decoration-brand-gold/30 underline-offset-4">SIM</span> a estas perguntas, continue lendo
+                 </h3>
+              </div>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {[
                   'Sua empresa/município paga parcelamentos federais (REFIS, PERT, PAES, PAEX e/ou outros)?',
                   'Você fez esses parcelamentos até 2026.',
                   'A parcela mensal está sangrando o seu caixa todo mês.',
                   'Você quer ter mais caixa para investir em outras áreas da empresa.'
                 ].map((item, i) => (
-                  <div key={i} className="group flex items-start gap-4 p-5 rounded-xl bg-gradient-to-r from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.07] hover:border-brand-gold/30 transition-all duration-300 cursor-default">
-                    <div className="mt-0.5 relative flex items-center justify-center w-6 h-6 rounded-md border border-brand-gold/30 bg-black/20 shrink-0 group-hover:border-brand-gold/80 group-hover:shadow-[0_0_15px_-3px_rgba(197,160,101,0.4)] transition-all duration-300">
-                        <Check size={14} className="text-brand-gold group-hover:scale-110 transition-transform duration-300" strokeWidth={3} />
+                  <div key={i} className="group flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-brand-gold/[0.05] hover:border-brand-gold/30 transition-all duration-300 cursor-default">
+                    <div className="mt-0.5 relative flex items-center justify-center w-6 h-6 rounded border border-brand-gold/40 bg-brand-gold/10 shrink-0 group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold transition-all duration-300 shadow-[0_0_10px_-3px_rgba(197,160,101,0.2)]">
+                        <Check size={14} className="text-brand-gold group-hover:text-black transition-colors duration-300" strokeWidth={3} />
                     </div>
                     <p className="text-neutral-300 group-hover:text-white transition-colors leading-relaxed font-medium">{item}</p>
                   </div>
@@ -238,32 +210,6 @@ const App: React.FC = () => {
              {/* CTA Solution - Scrolls to Form */}
              <Button onClick={scrollToForm} className="px-10" primary>QUERO ESSA ECONOMIA NA MINHA EMPRESA</Button>
           </div>
-        </div>
-      </section>
-
-      {/* 5. PROVA SOCIAL */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <SectionTitle title="Resultados Comprovados" subtitle="Nossos clientes comprovam publicamente nossos resultados." />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-           {[1, 2, 3, 4, 5, 6].map((i) => (
-             <GlassCard key={i} fullHeight className="group cursor-pointer min-h-[300px] flex flex-col items-center justify-center bg-black/40">
-               <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                 <ShieldCheck className="text-brand-gold opacity-50" />
-               </div>
-               <p className="text-center text-xs uppercase tracking-widest text-neutral-500">Atestado de Capacidade Técnica</p>
-               <p className="text-center text-white mt-2 font-bold">Cliente Confidencial #{i}</p>
-               <div className="mt-4 px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded border border-green-500/20 font-mono">
-                 CNPJ Verificado
-               </div>
-               {/* Note: Using placeholders as requested logic implies space for photos */}
-             </GlassCard>
-           ))}
-        </div>
-        
-        <div className="flex justify-center">
-            {/* CTA Proof - Scrolls to Form */}
-            <Button onClick={scrollToForm} className="px-10">QUERO SER O PRÓXIMO CASE DE SUCESSO</Button>
         </div>
       </section>
 
