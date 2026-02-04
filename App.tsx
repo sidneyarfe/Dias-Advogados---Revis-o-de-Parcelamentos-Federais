@@ -4,6 +4,7 @@ import { Button, GlassCard, Badge, SectionTitle, CheckItem, FormInput } from './
 
 const App: React.FC = () => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -50,16 +51,42 @@ const App: React.FC = () => {
           Você pode estar pagando <strong className="text-white font-semibold">MUITO MAIS</strong> do que deveria por um <strong className="text-white font-semibold">ERRO DE CÁLCULO</strong>. É possível <strong className="text-white font-semibold">REDUZIR 30% do SALDO DEVEDOR e PARCELA MENSAL</strong> (no mínimo) através de um método pouco conhecido que revelamos nesse vídeo.
         </p>
 
-        {/* Video Embed */}
-        <div className="mt-12 w-full max-w-4xl aspect-video rounded-2xl overflow-hidden relative shadow-[0_0_50px_-15px_rgba(197,160,101,0.2)] border border-white/10">
-          <iframe 
-            className="w-full h-full" 
-            src="https://www.youtube.com/embed/Ry14yL7-a3E?si=4nm_N2MoWUMuI56j" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowFullScreen
-          ></iframe>
+        {/* Video Embed with Performance Facade */}
+        <div className="mt-12 w-full max-w-4xl aspect-video rounded-2xl overflow-hidden relative shadow-[0_0_50px_-15px_rgba(197,160,101,0.2)] border border-white/10 group">
+          {!isVideoLoaded ? (
+            <button 
+              onClick={() => setIsVideoLoaded(true)}
+              className="absolute inset-0 w-full h-full block cursor-pointer"
+              aria-label="Reproduzir vídeo"
+            >
+              {/* High Quality YouTube Thumbnail */}
+              <img 
+                src="https://img.youtube.com/vi/Ry14yL7-a3E/maxresdefault.jpg" 
+                alt="Thumbnail do vídeo sobre redução de parcelamentos" 
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                width="1280"
+                height="720"
+                loading="eager" // Load this immediately as it's above fold
+              />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/30 transition-all">
+                <div className="w-20 h-20 rounded-full bg-brand-gold/90 flex items-center justify-center shadow-[0_0_30px_rgba(197,160,101,0.6)] group-hover:scale-110 transition-transform">
+                  <Play fill="black" size={32} className="ml-1 text-black" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 left-4 bg-black/80 px-2 py-1 rounded text-xs font-mono text-white">
+                REVISÃO TRIBUTÁRIA
+              </div>
+            </button>
+          ) : (
+            <iframe 
+              className="w-full h-full" 
+              src="https://www.youtube.com/embed/Ry14yL7-a3E?si=4nm_N2MoWUMuI56j&autoplay=1" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowFullScreen
+            ></iframe>
+          )}
         </div>
 
         <div className="mt-10 w-full max-w-md">
@@ -569,11 +596,14 @@ const App: React.FC = () => {
       {/* 12. FOOTER - SIMPLIFIED */}
       <footer className="bg-black py-16 px-6 border-t border-white/10">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          {/* Logo */}
+          {/* Logo with Lazy Loading and Dimension attributes for CLS and Load Speed */}
           <img 
             src="https://i.postimg.cc/fTbT27SV/DA-LOGO-2-(2).png" 
             alt="Dias Advocacia" 
             className="h-20 mb-10 opacity-90"
+            loading="lazy"
+            width="250"
+            height="80"
           />
           
           {/* Address & CNPJ */}
