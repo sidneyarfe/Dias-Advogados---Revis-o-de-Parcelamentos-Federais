@@ -48,7 +48,7 @@ const App: React.FC = () => {
         </h1>
         
         <p className="mt-6 text-lg md:text-xl max-w-3xl text-neutral-300 font-light leading-relaxed">
-          Você pode estar pagando <strong className="text-white font-semibold">MUITO MAIS</strong> do que deveria por um <strong className="text-white font-semibold">ERRO DE CÁLCULO</strong>. É possível <strong className="text-white font-semibold">REDUZIR 30% do SALDO DEVEDOR e PARCELA MENSAL</strong> (no mínimo) através de um método pouco conhecido que revelamos nesse vídeo.
+          Você pode estar pagando <strong className="text-white font-semibold">MUITO MAIS</strong> do que deveria por um <strong className="text-white font-semibold">ERRO DE CÁLCULO</strong>. É possível <strong className="text-white font-semibold">REDUZIR 30% do SALDO DEVEDOR, PARCELA MENSAL e DEVOLVER MILHÕES ao seu caixa</strong>, através de um método pouco conhecido que revelamos nesse vídeo.
         </p>
 
         {/* Video Embed with Performance Facade */}
@@ -59,9 +59,9 @@ const App: React.FC = () => {
               className="absolute inset-0 w-full h-full block cursor-pointer"
               aria-label="Reproduzir vídeo"
             >
-              {/* High Quality YouTube Thumbnail */}
+              {/* Custom Thumbnail */}
               <img 
-                src="https://img.youtube.com/vi/Ry14yL7-a3E/maxresdefault.jpg" 
+                src="https://i.postimg.cc/VN52qS1W/thumb-vsl.png" 
                 alt="Thumbnail do vídeo sobre redução de parcelamentos" 
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 width="1280"
