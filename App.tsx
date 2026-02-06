@@ -18,8 +18,19 @@ const App: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Logic to handle form submission would go here
-    alert("Dados recebidos! Nossa equipe entrará em contato.");
+    
+    const message = `Olá, Felipe! Tenho interesse em uma Análise Técnica Sem Custo de Parcelamentos Federais.
+
+Dados do Solicitante:
+Nome: ${formState.name}
+Empresa: ${formState.company}
+Cargo: ${formState.role}
+E-mail: ${formState.email}
+Telefone: ${formState.phone}`;
+
+    const whatsappUrl = `https://wa.me/5591981160842?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappUrl, '_blank');
     closeModal();
   };
 
@@ -149,8 +160,8 @@ const App: React.FC = () => {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <div className="p-8 md:p-10 bg-off-black relative">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">Solicitar Análise</h3>
-            <p className="text-neutral-400 text-sm">Preencha seus dados para que nossa equipe entre em contato.</p>
+            <h3 className="text-2xl font-bold text-white mb-2">Solicitar Análise Técnica Sem Custo</h3>
+            <p className="text-neutral-400 text-sm">Preencha seus dados para que nossa equipe entre em contato e prossiga com a Análise Técnica dos seus parcelamentos.</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
