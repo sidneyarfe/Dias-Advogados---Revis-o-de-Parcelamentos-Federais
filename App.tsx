@@ -1,35 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Play, Check, ChevronDown, ChevronUp, AlertCircle, ShieldCheck, TrendingUp, Clock, Scale, ArrowRight, Menu, X, Instagram, Linkedin, Mail, MapPin, Phone, CreditCard, FileText, Utensils, FileSearch, Percent } from 'lucide-react';
-import { Button, GlassCard, Badge, SectionTitle, CheckItem, FormInput } from './components/UI';
+import React, { useState } from 'react';
+import { Play, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Button, Badge, FormInput, Modal } from './components/UI';
 
 const App: React.FC = () => {
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
-    email: '',
-    phone: '',
     company: '',
-    installments: [] as string[],
-    monthlyValue: ''
+    role: '',
+    email: '',
+    phone: ''
   });
 
-  const toggleFaq = (index: number) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  const scrollToForm = () => {
-    const element = document.getElementById('contact-form');
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleInstallmentChange = (type: string) => {
-    const current = formState.installments;
-    if (current.includes(type)) {
-      setFormState({ ...formState, installments: current.filter(i => i !== type) });
-    } else {
-      setFormState({ ...formState, installments: [...current, type] });
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Logic to handle form submission would go here
+    alert("Dados recebidos! Nossa equipe entrará em contato.");
+    closeModal();
   };
 
   return (
@@ -66,7 +57,7 @@ const App: React.FC = () => {
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                 width="1280"
                 height="720"
-                loading="eager" // Load this immediately as it's above fold
+                loading="eager" 
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/30 transition-all">
                 <div className="w-20 h-20 rounded-full bg-brand-gold/90 flex items-center justify-center shadow-[0_0_30px_rgba(197,160,101,0.6)] group-hover:scale-110 transition-transform">
@@ -90,513 +81,132 @@ const App: React.FC = () => {
         </div>
 
         <div className="mt-10 w-full max-w-md">
-          {/* CTA Hero - Scrolls to Form */}
-          <Button onClick={scrollToForm} fullWidth>
+          {/* CTA Hero - Opens Modal */}
+          <Button onClick={openModal} fullWidth>
             DESCUBRA QUANTO PODE SER REDUZIDO
           </Button>
         </div>
       </section>
 
-      {/* 3. PROBLEMA SECTION */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
-          <div>
-            <GlassCard fullHeight className="relative overflow-hidden border-brand-gold/20 !bg-black/40">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-[80px] -z-10 pointer-events-none" />
-              
-              <div className="border-l-4 border-brand-gold pl-6 mb-8 py-2">
-                 <h3 className="text-lg md:text-xl font-bold text-white uppercase tracking-wider leading-relaxed">
-                   Se você responder <span className="text-brand-gold text-glow underline decoration-brand-gold/30 underline-offset-4">SIM</span> a estas perguntas, continue lendo
-                 </h3>
-              </div>
-              
-              <div className="space-y-4">
-                {[
-                  'Sua empresa/município paga parcelamentos federais (REFIS, PERT, PAES, PAEX e/ou outros)?',
-                  'Você fez esses parcelamentos até 2026.',
-                  'A parcela mensal está sangrando o seu caixa todo mês.',
-                  'Você quer ter mais caixa para investir em outras áreas da empresa.'
-                ].map((item, i) => (
-                  <div key={i} className="group flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-brand-gold/[0.05] hover:border-brand-gold/30 transition-all duration-300 cursor-default">
-                    <div className="mt-0.5 relative flex items-center justify-center w-6 h-6 rounded border border-brand-gold/40 bg-brand-gold/10 shrink-0 group-hover:bg-brand-gold group-hover:text-black group-hover:border-brand-gold transition-all duration-300 shadow-[0_0_10px_-3px_rgba(197,160,101,0.2)]">
-                        <Check size={14} className="text-brand-gold group-hover:text-black transition-colors duration-300" strokeWidth={3} />
-                    </div>
-                    <p className="text-neutral-300 group-hover:text-white transition-colors leading-relaxed font-medium">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </GlassCard>
-          </div>
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Então aqui está o que a Receita nunca vai te contar:
-            </h2>
-            <p className="text-xl text-neutral-300 mb-6">
-              Esses parcelamentos podem ter sido calculados de forma <span className="text-red-500 font-bold bg-red-500/10 px-2 rounded">ERRADA</span>.
-              <br/>E você está pagando mais do que deveria.
-            </p>
+      {/* 2. DIRECT CONTENT SECTION (Updated for Maximum Impact) */}
+      <section className="py-20 px-6 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          {/* Card Container with Gold Border Effect */}
+          <div className="relative rounded-3xl p-[1px] bg-gradient-to-b from-brand-gold/50 via-brand-gold/10 to-transparent shadow-[0_0_60px_-15px_rgba(197,160,101,0.25)]">
             
-            <div className="space-y-4 border-l-2 border-red-500/30 pl-6 my-8">
-              <h4 className="text-white font-semibold">Como isso acontece?</h4>
-              <p>Quando sua empresa aderiu ao parcelamento, um sistema automatizado da Receita Federal calculou tudo. Esse sistema:</p>
-              <ul className="space-y-2">
-                <li className="flex gap-2"><span className="text-red-500">❌</span> Aplicou regras genéricas</li>
-                <li className="flex gap-2"><span className="text-red-500">❌</span> Usa interpretações administrativas desatualizadas</li>
-                <li className="flex gap-2"><span className="text-red-500">❌</span> Ignora decisões recentes do CARF</li>
-                <li className="flex gap-2"><span className="text-red-500">❌</span> Desconsidera novos entendimentos dos tribunais</li>
-              </ul>
-            </div>
+            <div className="bg-[#0A0A0A] rounded-[23px] p-8 md:p-14 relative overflow-hidden">
+              
+              {/* Stronger Glow Effects for "Chamativa" look */}
+              <div className="absolute -top-32 -right-32 w-80 h-80 bg-brand-gold/10 rounded-full blur-[80px] pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(197,160,101,0.08),transparent_70%)] pointer-events-none" />
 
-            <div className="bg-red-500/10 border border-red-500/20 p-6 rounded-xl">
-              <p className="font-bold text-white mb-2">O resultado?</p>
-              <p>Sua empresa paga MUITO MAIS do que deveria. Mês após mês. Ano após ano.</p>
-              <p className="mt-4 text-sm text-neutral-400">É uma falha sistêmica que atinge mais de <span className="text-white font-mono font-bold">92%</span> dos parcelamentos ativos no Brasil.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="flex justify-center">
-            {/* CTA Problem - Scrolls to Form */}
-            <Button onClick={scrollToForm} className="px-10">QUERO PARAR DE PAGAR O QUE NÃO DEVO</Button>
-        </div>
-      </section>
-
-      {/* 4. SOLUÇÃO */}
-      <section className="py-20 bg-off-black relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-green-900/10 rounded-full blur-[100px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionTitle 
-            title="A boa notícia: Existe uma forma de REDUZIR 30% ou mais da sua parcela e saldo devedor." 
-            subtitle="Apenas corrigindo esse erro de cálculo nos seus parcelamentos através de uma Revisão Administrativa junto à Receita."
-          />
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <GlassCard fullHeight className="text-center hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-16 h-16 mx-auto bg-green-500/10 rounded-full flex items-center justify-center text-green-400 mb-6 border border-green-500/20">
-                <TrendingUp size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Redução da Parcela e Saldo Devedor</h3>
-              <p>Identificamos valores indevidos e solicitamos a correção co cálculo, aliviando seu fluxo mensal imediatamente.</p>
-            </GlassCard>
-            <GlassCard fullHeight className="text-center hover:-translate-y-2 transition-transform duration-500" glow>
-              <div className="w-16 h-16 mx-auto bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 border border-brand-gold/20">
-                <ShieldCheck size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Sem Risco Judicial</h3>
-              <p>Tudo é feito por via 100% administrativa. Sem precisar de ação judicial e sem gastos iniciais.</p>
-            </GlassCard>
-            <GlassCard fullHeight className="text-center hover:-translate-y-2 transition-transform duration-500">
-              <div className="w-16 h-16 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400 mb-6 border border-blue-500/20">
-                <Clock size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4">Resultados em 3 meses</h3>
-              <p>Liberação imediata de fluxo de caixa em cerca de 3 meses após o início da revisão.</p>
-            </GlassCard>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#0a0a0a] to-[#111] border border-white/10 rounded-2xl p-8 md:p-12 relative mb-12">
-            <div className="absolute top-0 left-0 bg-brand-gold text-black text-xs font-bold px-4 py-1 rounded-br-lg uppercase tracking-widest">
-              Na Prática
-            </div>
-            <div className="grid md:grid-cols-2 gap-12 items-center mt-6">
-              <div className="space-y-6">
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-neutral-500 mb-1">Cenário Atual</p>
-                  <p className="text-2xl text-white font-light">Você paga uma parcela de <span className="font-mono text-red-400">R$ 100.000/mês</span></p>
-                </div>
-                <div className="h-px bg-white/10 w-full" />
-                <div>
-                  <p className="text-xs uppercase tracking-widest text-neutral-500 mb-1">Nossa Ação</p>
-                  <p className="text-xl text-neutral-300">Nós efetuamos uma revisão que reduz 30% da parcela e saldo devedor.</p>
-                </div>
-              </div>
-              <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-6">
-                <h4 className="text-green-400 font-bold text-lg mb-4 flex items-center gap-2">
-                  <Check size={20} /> Resultado
-                </h4>
-                <ul className="space-y-4">
-                  <li className="flex justify-between items-center border-b border-green-500/10 pb-2">
-                    <span>Saldo Devedor</span>
-                    <span className="text-white font-mono">Redução Milionária</span>
-                  </li>
-                  <li className="flex justify-between items-center border-b border-green-500/10 pb-2">
-                    <span>Fluxo de Caixa Livre</span>
-                    <span className="text-green-400 font-mono font-bold">+ R$ 30.000/mês</span>
-                  </li>
-                  <li className="text-sm text-neutral-400 pt-2">
-                    Sem ação judicial. Sem custos iniciais.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className="flex justify-center">
-             {/* CTA Solution - Scrolls to Form */}
-             <Button onClick={scrollToForm} className="px-10" primary>QUERO ESSA ECONOMIA NA MINHA EMPRESA</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* 6 & 7. OBJEÇÕES */}
-      <section className="py-20 bg-off-black-light border-y border-white/5">
-        <div className="max-w-5xl mx-auto px-6 space-y-20">
-          
-          {/* Objeção 1 */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Texto movido para a primeira posição visual */}
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-6">"Isso é recuperação de créditos tributários?"</h2>
-              <p className="text-4xl font-bold text-brand-gold mb-6">Não.</p>
-              <p className="mb-4">Aqui é importante deixar algo absolutamente claro: <strong className="text-white">Não se trata de recuperação de créditos tributários.</strong></p>
-              <ul className="space-y-2 mb-6">
-                <li className="text-neutral-400"><span className="text-red-500 mr-2">❌</span> Não há compensação</li>
-                <li className="text-neutral-400"><span className="text-red-500 mr-2">❌</span> Não há ação judicial</li>
-                <li className="text-neutral-400"><span className="text-red-500 mr-2">❌</span> Não há pedido de restituição</li>
-              </ul>
-              <p>O que fazemos é o <strong>RECÁLCULO e REVISÃO</strong> do valor do parcelamento. Você não está usando crédito algum. Está apenas pagando o valor correto.</p>
-            </div>
-            
-            {/* Cartão do Restaurante movido para a segunda posição visual */}
-            <div>
-              <div className="relative group">
-                {/* Glow effect behind the card */}
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-brand-gold/5 rounded-2xl blur-xl -z-10" />
+              <div className="relative z-10">
                 
-                <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl overflow-hidden relative">
-                    <div className="bg-white/5 border-b border-white/5 px-6 py-4 flex items-center justify-center md:justify-start gap-3">
-                      <div className="p-2 bg-brand-gold/10 rounded-lg text-brand-gold shrink-0 border border-brand-gold/20">
-                        <Utensils size={16} />
-                      </div>
-                      <h3 className="text-sm font-bold text-white uppercase tracking-wider text-center md:text-left">
-                        Para entender melhor, imagine que estamos em um restaurante
-                      </h3>
-                    </div>
-
-                    <div className="p-8 space-y-8 relative">
-                      {/* Connecting Line */}
-                      <div className="absolute left-[3.25rem] top-20 bottom-20 w-px border-l border-dashed border-white/20 z-0" />
-
-                      {/* Item 1: Recuperação */}
-                      <div className="relative z-10 flex gap-6 group/item1 transition-all duration-300 hover:translate-x-1">
-                          <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 shadow-[0_0_15px_-5px_rgba(59,130,246,0.3)] backdrop-blur-sm">
-                            <CreditCard size={24} />
-                          </div>
-                          <div>
-                            <h4 className="text-blue-400 font-bold text-sm uppercase tracking-wider mb-1">Recuperação de Créditos</h4>
-                            <p className="text-sm text-neutral-400 leading-relaxed">É como usar um <strong className="text-white">voucher de desconto</strong> para abater o valor final da conta.</p>
-                          </div>
-                      </div>
-
-                      {/* Item 2: Nossa Revisão */}
-                      <div className="relative z-10 flex gap-6 group/item2 transition-all duration-300 hover:translate-x-1">
-                          <div className="w-12 h-12 rounded-xl bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-brand-gold shrink-0 shadow-[0_0_20px_-5px_rgba(197,160,101,0.5)] backdrop-blur-sm">
-                            <FileText size={24} />
-                          </div>
-                          <div>
-                            <h4 className="text-brand-gold font-bold text-sm uppercase tracking-wider mb-1">Nossa Revisão</h4>
-                            <p className="text-sm text-white leading-relaxed">É retirar da comanda os <strong className="text-brand-gold">pratos que você nunca pediu</strong>, mas que foram cobrados.</p>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Objeção 2 */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-6">"Mas eu já tenho advogado e acho que ele já faz isso"</h2>
-              <p className="mb-4">Ótimo que você tenha um advogado. Mas provavelmente ele atua apenas na recuperação de créditos tributários — um trabalho importante, mas diferente.</p>
-              <div className="bg-brand-gold/5 border-l-4 border-brand-gold p-6 rounded-r-lg">
-                <p className="text-white italic">"Grande parte dos nossos clientes já faziam recuperação de créditos com seus advogados. E ainda assim tinham parcelamentos mal calculados."</p>
-              </div>
-              <p className="mt-4 text-sm text-neutral-400">Recuperação de créditos e Revisão de Parcelamentos são complementares, não excludentes.</p>
-            </div>
-            <div>
-               <GlassCard>
-                  <h3 className="text-white font-bold mb-4 border-b border-white/10 pb-4">Por que seu advogado não faz isso?</h3>
-                  <div className="space-y-6">
-                    <div>
-                      <Badge>01</Badge>
-                      <h4 className="text-white font-bold mt-2">Combinação Rara de Expertise</h4>
-                      <p className="text-sm mt-1">Exige uma equipe de contadores e advogados tributaristas especialistas em parcelamentos federais + tecnologia própria de análise, que custou 15 anos e milhares de reais para desenvolvermos.</p>
-                    </div>
-                    <div>
-                      <Badge>02</Badge>
-                      <h4 className="text-white font-bold mt-2">Engenharia Reversa de Parcelamentos</h4>
-                      <p className="text-sm mt-1">Exige nossa tecnologia específica e própria para recalcular multas/juros em massa e combinar com a legislação vigente</p>
-                    </div>
-                    <div>
-                      <Badge>03</Badge>
-                      <h4 className="text-white font-bold mt-2">Foco Diferente</h4>
-                      <p className="text-sm mt-1">Seu advogado foca em processos e teses. Nós focamos em uma análise 360° do parcelamento impossível de ser feita por qualquer profissional.</p>
-                    </div>
+                <div className="flex flex-col md:flex-row gap-6 md:items-start mb-10">
+                  <div className="shrink-0">
+                     <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 flex items-center justify-center border border-brand-gold/20 text-brand-gold shadow-[0_0_20px_rgba(197,160,101,0.15)]">
+                        <AlertCircle size={36} />
+                     </div>
                   </div>
-               </GlassCard>
-            </div>
-          </div>
-          
-          <div className="flex justify-center mt-12">
-            {/* CTA Objections - Scrolls to Form */}
-            <Button onClick={scrollToForm} className="px-10 text-lg">AGENDAR CONVERSA COM NOSSO ESPECIALISTA EM PARCELAMENTOS</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* 9. MOMENTUM FINAL */}
-      <section className="py-16 bg-deep-carbon border-b border-white/5">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <Badge icon={TrendingUp}>Status em Tempo Real</Badge>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mt-6 mb-4">
-            Histórico de Análises da Última Semana
-          </h2>
-          <p className="text-neutral-400 text-lg mb-8 max-w-2xl mx-auto">
-            Veja quanto as empresas que se cadastraram nessa página descobriram que podiam reduzir em seus parcelamentos
-          </p>
-          
-          <div className="space-y-3 text-left">
-            {[
-              { type: "Empresa de logística (SP)", old: "87 mil", save: "26 mil" },
-              { type: "Indústria alimentícia (MT)", old: "143 mil", save: "43 mil" },
-              { type: "Construtora (PE)", old: "52 mil", save: "15 mil" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5 animate-pulse-slow">
-                <div className="flex items-center gap-3">
-                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                   <span className="text-white font-medium">{item.type}</span>
+                  <div>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white leading-[1.1] tracking-tight">
+                      Você já achou <span className="text-brand-gold">absurdo</span> o valor do parcelamento que paga todo mês?
+                    </h2>
+                  </div>
                 </div>
-                <div className="text-sm text-right">
-                   <span className="block text-neutral-500 text-xs">Parcela de R$ {item.old}</span>
-                   <span className="text-green-400 font-mono font-bold">Potencial de R$ {item.save}/mês livre</span>
+
+                <div className="space-y-6 text-lg md:text-xl text-neutral-300 font-light leading-relaxed border-l-2 border-white/5 pl-6 ml-2 md:ml-6">
+                  <p>
+                    Um erro grave de cálculo, presente em <strong className="text-white font-semibold underline decoration-brand-gold/40 underline-offset-4 decoration-2">92% dos parcelamentos federais</strong>, está fazendo empresas pagarem muito mais do que a lei permite.
+                  </p>
+
+                  <p className="text-white font-medium italic text-xl">
+                    E ninguém está falando sobre isso.
+                  </p>
+
+                  <p>
+                    A boa notícia é que esse erro pode ser corrigido <span className="text-brand-gold font-semibold">agora</span>.
+                  </p>
+
+                  <p>
+                    No vídeo acima, eu, Felipe Dias, mostro como 3 empresas clientes conseguiram <span className="bg-brand-gold/10 text-brand-gold px-1 py-0.5 rounded font-semibold">+30% de redução no saldo devedor e na parcela mensal</span>, além da devolução imediata de milhões de reais ao caixa.
+                  </p>
+                </div>
+
+                <div className="mt-14">
+                  <Button onClick={openModal} fullWidth className="md:text-lg py-5 shadow-[0_0_30px_rgba(197,160,101,0.3)] hover:shadow-[0_0_50px_rgba(197,160,101,0.5)]">
+                    DESCUBRA QUANTO PODE SER REDUZIDO
+                  </Button>
                 </div>
               </div>
-            ))}
+
+            </div>
           </div>
-          <p className="text-xs text-neutral-600 mt-4 uppercase tracking-widest">Números estimados em análise inicial, no decorrer do processo podem aumentar ou diminuir com base na análise aprofundada.</p>
+        </div>
+      </section>
+
+      {/* MODAL FORM */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <div className="p-8 md:p-10 bg-off-black relative">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-white mb-2">Solicitar Análise</h3>
+            <p className="text-neutral-400 text-sm">Preencha seus dados para que nossa equipe entre em contato.</p>
+          </div>
           
-          <div className="mt-8 flex justify-center">
-             {/* CTA Momentum - Scrolls to Form */}
-             <Button onClick={scrollToForm} className="w-full md:w-auto">FAZER MINHA ANÁLISE AGORA</Button>
-          </div>
-        </div>
-      </section>
-
-      {/* NEW: COMO FUNCIONA (Before Form) */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
-        <SectionTitle 
-          title="Como funciona nosso trabalho e quanto vai custar?" 
-          subtitle="O processo é muito simples:"
-        />
-        
-        <div className="grid md:grid-cols-3 gap-8 relative mb-12">
-           {/* Connector Line (Desktop Only) */}
-           <div className="hidden md:block absolute top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent -z-10" />
-
-           {/* Step 1 */}
-           <div className="relative">
-             <GlassCard fullHeight className="hover:border-brand-gold/30 transition-colors">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-[#050505] border border-brand-gold rounded-full flex items-center justify-center text-brand-gold font-bold z-10">
-                    1
-                </div>
-                <div className="mt-6 text-center">
-                    <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mx-auto mb-4 text-neutral-300">
-                        <FileSearch size={24} />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-4">Análise Inicial</h3>
-                    <p className="text-sm text-neutral-400 leading-relaxed mb-6">
-                        Você deve nos autorizar a fazer uma <strong>Análise Técnica sem custo</strong> dos Parcelamentos para que possamos identificar erros de cálculo e determinar o quanto pode ser reduzido.
-                    </p>
-                    <div className="text-left space-y-3 bg-white/5 p-4 rounded-lg text-sm border border-white/5">
-                        <p className="flex items-start gap-2"><Check size={16} className="text-brand-gold shrink-0 mt-0.5" /> Assinamos um NDA (sigilo).</p>
-                        <p className="flex items-start gap-2"><Check size={16} className="text-brand-gold shrink-0 mt-0.5" /> Procuração só de consulta.</p>
-                        <p className="flex items-start gap-2"><Check size={16} className="text-brand-gold shrink-0 mt-0.5" /> Você recebe a proposta e decide se quer nos contratar.</p>
-                    </div>
-                </div>
-             </GlassCard>
-           </div>
-
-           {/* Step 2 */}
-           <div className="relative">
-             <GlassCard fullHeight className="hover:border-brand-gold/30 transition-colors">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-[#050505] border border-brand-gold rounded-full flex items-center justify-center text-brand-gold font-bold z-10">
-                    2
-                </div>
-                <div className="mt-6 text-center">
-                    <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mx-auto mb-4 text-neutral-300">
-                        <FileText size={24} />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-4">Revisão Administrativa</h3>
-                    <p className="text-neutral-400 leading-relaxed">
-                        Após o aceite da proposta, iniciamos a Revisão Administrativa para:
-                    </p>
-                    <div className="mt-6 space-y-2">
-                        <Badge>Corrigir valores indevidos</Badge>
-                        <Badge>Reduzir valor da parcela</Badge>
-                        <Badge>Reduzir saldo devedor</Badge>
-                    </div>
-                </div>
-             </GlassCard>
-           </div>
-
-           {/* Step 3 */}
-           <div className="relative">
-             <GlassCard fullHeight className="hover:border-brand-gold/30 transition-colors" glow>
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-brand-gold border border-brand-gold rounded-full flex items-center justify-center text-black font-bold z-10 shadow-[0_0_15px_rgba(197,160,101,0.5)]">
-                    3
-                </div>
-                <div className="mt-6 text-center">
-                    <div className="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mx-auto mb-4 text-brand-gold">
-                        <Percent size={24} />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-4">Redução Efetiva e Honorários</h3>
-                    <p className="text-neutral-400 leading-relaxed mb-6">
-                        Sua redução é efetivada diretamente pela Receita Federal.
-                    </p>
-                    <div className="bg-brand-gold/10 border border-brand-gold/30 p-5 rounded-xl">
-                        <p className="text-sm text-brand-gold font-bold uppercase tracking-widest mb-2">Somente no Sucesso</p>
-                        <p className="text-white text-sm leading-relaxed">Você só paga nossos honorários, que são <strong className="text-brand-gold">20% do valor reduzido</strong>, após a homologação.</p>
-                    </div>
-                </div>
-             </GlassCard>
-           </div>
-        </div>
-        
-        <div className="flex justify-center">
-           {/* CTA How it works - Scrolls to Form */}
-           <Button onClick={scrollToForm} className="px-12 text-lg">INICIAR ANÁLISE SEM CUSTO</Button>
-        </div>
-      </section>
-
-      {/* 10. FORMULÁRIO */}
-      <section id="contact-form" className="py-20 px-6 max-w-3xl mx-auto relative z-10">
-        <GlassCard glow className="p-8 md:p-12">
-          <div className="text-center mb-10">
-             <h2 className="text-3xl font-bold text-white mb-2">Descubra quanto você pode reduzir</h2>
-             <p>Preencha o formulário abaixo. Em até 24h úteis, nossa equipe técnica entra em contato.</p>
-          </div>
-
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <FormInput 
               label="Nome Completo" 
-              value={formState.name} 
+              value={formState.name}
               onChange={(e) => setFormState({...formState, name: e.target.value})}
               required
             />
             <FormInput 
-              label="E-mail Corporativo" 
+              label="Nome da Empresa" 
+              value={formState.company}
+              onChange={(e) => setFormState({...formState, company: e.target.value})}
+              required
+            />
+            <FormInput 
+              label="Cargo" 
+              value={formState.role}
+              onChange={(e) => setFormState({...formState, role: e.target.value})}
+              required
+            />
+            <FormInput 
+              label="E-mail" 
               type="email"
-              value={formState.email} 
+              value={formState.email}
               onChange={(e) => setFormState({...formState, email: e.target.value})}
               required
             />
             <FormInput 
-              label="Telefone/WhatsApp" 
+              label="WhatsApp (com DDD)" 
               type="tel"
-              value={formState.phone} 
+              value={formState.phone}
               onChange={(e) => setFormState({...formState, phone: e.target.value})}
+              placeholder="(00) 00000-0000"
               required
             />
-            <FormInput 
-              label="Nome da Empresa/Município" 
-              value={formState.company} 
-              onChange={(e) => setFormState({...formState, company: e.target.value})}
-              required
-            />
-
-            <div className="mb-4">
-              <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">
-                Tipo de Parcelamento
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {['REFIS', 'PERT', 'PAES', 'PAEX', 'Outro', 'Não sei'].map(opt => (
-                  <label key={opt} className={`flex items-center gap-2 p-3 rounded cursor-pointer border transition-colors ${formState.installments.includes(opt) ? 'bg-brand-gold/20 border-brand-gold text-white' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                    <input 
-                      type="checkbox" 
-                      checked={formState.installments.includes(opt)}
-                      onChange={() => handleInstallmentChange(opt)}
-                      className="accent-brand-gold"
-                    />
-                    <span className="text-sm">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">
-                Valor aproximado da parcela mensal
-              </label>
-              <div className="space-y-2">
-                {['Até R$ 10 mil', 'R$ 10 mil a R$ 50 mil', 'R$ 50 mil a R$ 100 mil', 'Acima de R$ 100 mil', 'Prefiro não informar agora'].map(opt => (
-                  <label key={opt} className={`flex items-center gap-3 p-3 rounded cursor-pointer border transition-colors ${formState.monthlyValue === opt ? 'bg-brand-gold/20 border-brand-gold text-white' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}>
-                    <input 
-                      type="radio" 
-                      name="monthlyValue"
-                      value={opt}
-                      checked={formState.monthlyValue === opt}
-                      onChange={(e) => setFormState({...formState, monthlyValue: e.target.value})}
-                      className="accent-brand-gold"
-                    />
-                    <span className="text-sm">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Form Submit Button - DOES NOT scroll */}
-            <Button fullWidth className="text-lg">SOLICITAR ANÁLISE GRATUITA <ArrowRight size={20} /></Button>
             
-            <div className="pt-6 border-t border-white/10 space-y-2 text-center md:text-left text-sm text-neutral-500">
-               <p className="flex items-center justify-center md:justify-start gap-2"><ShieldCheck size={14} className="text-brand-gold" /> Seus dados protegidos por NDA</p>
-               <p className="flex items-center justify-center md:justify-start gap-2"><Check size={14} className="text-brand-gold" /> Análise 100% gratuita e sem compromisso</p>
-               <p className="flex items-center justify-center md:justify-start gap-2"><span className="text-brand-gold font-bold">SÓ PAGA SE REDUZIR</span> (20% da redução obtida)</p>
+            <div className="pt-4">
+              <Button fullWidth className="w-full justify-center">
+                ENVIAR SOLICITAÇÃO <ArrowRight size={18} />
+              </Button>
+            </div>
+            
+            <div className="text-center mt-4">
+              <p className="flex items-center justify-center gap-2 text-xs text-neutral-500">
+                <ShieldCheck size={12} className="text-brand-gold" /> Seus dados estão seguros
+              </p>
             </div>
           </form>
-        </GlassCard>
-      </section>
-
-      {/* 11. FAQ */}
-      <section className="py-20 px-6 max-w-4xl mx-auto relative z-0">
-        <SectionTitle title="Perguntas Frequentes" />
-        <div className="space-y-4 mb-12">
-          {[
-            { q: "Quanto tempo demora a análise técnica?", a: "Entre 7 a 15 dias úteis após você nos enviar a documentação do parcelamento (extrato de consolidação, termo de adesão)." },
-            { q: "Funciona para qualquer tipo de parcelamento federal?", a: "Sim. Funciona para REFIS, PERT, PAES, PAEX e outros programas de parcelamento federal — inclusive para parcelamentos já quitados nos últimos 5 anos." },
-            { q: "Preciso pagar algo antecipado?", a: "Não. A análise é 100% gratuita. Você só paga 20% da redução obtida — e apenas DEPOIS da Receita homologar. Se não houver redução possível, nada é cobrado." },
-            { q: "Isso afeta meu parcelamento atual?", a: "Não. A revisão apenas corrige os valores. Seu parcelamento continua ativo, só que com parcelas menores e saldo devedor reduzido." },
-            { q: "E se não houver redução possível?", a: "Você recebe o relatório técnico explicando por que não foi possível reduzir — sem custo algum. Nem fechamos contrato se não identificarmos oportunidade de redução." }
-          ].map((item, index) => (
-            <div key={index} className="border border-white/10 rounded-lg bg-white/5 overflow-hidden">
-              <button 
-                className="w-full flex justify-between items-center p-6 text-left hover:bg-white/5 transition-colors"
-                onClick={() => toggleFaq(index)}
-              >
-                <span className="font-bold text-white pr-4">{item.q}</span>
-                {activeFaq === index ? <ChevronUp className="text-brand-gold" /> : <ChevronDown className="text-neutral-500" />}
-              </button>
-              {activeFaq === index && (
-                <div className="p-6 pt-0 text-neutral-300 border-t border-white/5 mt-2">
-                   <p className="mt-4">{item.a}</p>
-                </div>
-              )}
-            </div>
-          ))}
         </div>
-        
-        <div className="flex justify-center">
-            {/* CTA FAQ - Scrolls to Form */}
-            <Button onClick={scrollToForm} primary={false}>AINDA TENHO DÚVIDAS - FALAR COM EQUIPE DIAS ADVOGADOS</Button>
-        </div>
-      </section>
+      </Modal>
 
-      {/* 12. FOOTER - SIMPLIFIED */}
-      <footer className="bg-black py-16 px-6 border-t border-white/10">
+      {/* FOOTER */}
+      <footer className="bg-black py-16 px-6 border-t border-white/10 mt-auto">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          {/* Logo with Lazy Loading and Dimension attributes for CLS and Load Speed */}
+          {/* Logo */}
           <img 
             src="https://i.postimg.cc/fTbT27SV/DA-LOGO-2-(2).png" 
             alt="Dias Advocacia" 

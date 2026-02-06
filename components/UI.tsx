@@ -1,5 +1,5 @@
-import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { LucideIcon, X } from 'lucide-react';
 
 export const Button: React.FC<{
   children: React.ReactNode;
@@ -8,7 +8,7 @@ export const Button: React.FC<{
   onClick?: () => void;
   fullWidth?: boolean;
 }> = ({ children, primary = true, className = '', onClick, fullWidth = false }) => {
-  const baseStyle = "font-sans font-bold uppercase tracking-wider py-4 px-8 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group";
+  const baseStyle = "font-sans font-bold uppercase tracking-wider py-4 px-8 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 relative overflow-hidden group cursor-pointer";
   
   const primaryStyle = "bg-brand-gold text-black hover:bg-[#d4b078] shadow-[0_0_20px_rgba(197,160,101,0.4)] hover:shadow-[0_0_30px_rgba(197,160,101,0.6)]";
   const secondaryStyle = "border border-brand-gold text-brand-gold hover:bg-brand-gold/10";
@@ -116,6 +116,43 @@ export const FormInput: React.FC<{
           onChange={onChange}
         />
       )}
+    </div>
+  );
+};
+
+export const Modal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}> = ({ isOpen, onClose, children }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div 
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" 
+        onClick={onClose}
+      />
+      <div className="relative w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden animate-in fade-in zoom-in duration-300">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-neutral-500 hover:text-white transition-colors p-2 z-10"
+        >
+          <X size={24} />
+        </button>
+        {children}
+      </div>
     </div>
   );
 };
