@@ -12,13 +12,53 @@ const App: React.FC = () => {
     email: '',
     phone: ''
   });
+  const [phoneError, setPhoneError] = useState('');
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const formatPhoneNumber = (value: string) => {
+    // Remove tudo que não é dígito
+    let v = value.replace(/\D/g, "");
+    
+    // Limita a 11 dígitos
+    if (v.length > 11) v = v.substring(0, 11);
+
+    // Aplica a máscara
+    if (v.length > 10) {
+      // (11) 91234-5678
+      v = v.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+    } else if (v.length > 6) {
+      // (11) 1234-5678
+      v = v.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    } else if (v.length > 2) {
+      // (11) 12...
+      v = v.replace(/^(\d\d)(\d{0,5}).*/, "($1) $2");
+    } else if (v.length > 0) {
+      // (1...
+      v = v.replace(/^(\d*)/, "($1");
+    }
+    
+    return v;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const formattedPhone = formatPhoneNumber(e.target.value);
+    setFormState({ ...formState, phone: formattedPhone });
+    if (phoneError) setPhoneError('');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validação do Telefone (Mínimo 10 dígitos: DDD + Número)
+    const cleanPhone = formState.phone.replace(/\D/g, '');
+    if (cleanPhone.length < 10 || cleanPhone.length > 11) {
+      setPhoneError('Por favor, digite um número válido com DDD (Ex: 11 99999-9999).');
+      return;
+    }
+    setPhoneError('');
+
     const message = `Olá, Felipe! Tenho interesse em uma Análise Técnica Sem Custo de Parcelamentos Federais.
 
 Dados do Solicitante:
@@ -158,13 +198,13 @@ Telefone: ${formState.phone}`;
 
       {/* MODAL FORM */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <div className="p-8 md:p-10 bg-off-black relative">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">Solicitar Análise Técnica Sem Custo</h3>
-            <p className="text-neutral-400 text-sm">Preencha seus dados para que nossa equipe entre em contato e prossiga com a Análise Técnica dos seus parcelamentos.</p>
+        <div className="px-5 pb-5 pt-14 md:p-10 bg-off-black relative">
+          <div className="text-center mb-6 md:mb-8">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Solicitar Análise Técnica Sem Custo</h3>
+            <p className="text-neutral-400 text-xs md:text-sm">Preencha seus dados para que nossa equipe entre em contato e prossiga com a Análise Técnica dos seus parcelamentos.</p>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3">
             <FormInput 
               label="Nome Completo" 
               value={formState.name}
@@ -194,19 +234,20 @@ Telefone: ${formState.phone}`;
               label="WhatsApp (com DDD)" 
               type="tel"
               value={formState.phone}
-              onChange={(e) => setFormState({...formState, phone: e.target.value})}
+              onChange={handlePhoneChange}
               placeholder="(00) 00000-0000"
               required
+              error={phoneError}
             />
             
-            <div className="pt-4">
-              <Button fullWidth className="w-full justify-center">
+            <div className="pt-2 md:pt-4">
+              <Button fullWidth className="w-full justify-center text-sm md:text-base py-3 md:py-4">
                 ENVIAR SOLICITAÇÃO <ArrowRight size={18} />
               </Button>
             </div>
             
             <div className="text-center mt-4">
-              <p className="flex items-center justify-center gap-2 text-xs text-neutral-500">
+              <p className="flex items-center justify-center gap-2 text-[10px] md:text-xs text-neutral-500">
                 <ShieldCheck size={12} className="text-brand-gold" /> Seus dados estão seguros
               </p>
             </div>

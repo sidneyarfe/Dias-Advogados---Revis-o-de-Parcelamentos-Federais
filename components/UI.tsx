@@ -94,12 +94,13 @@ export const FormInput: React.FC<{
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   options?: string[];
   required?: boolean;
-}> = ({ label, type = "text", placeholder, value, onChange, options, required }) => {
-  const baseInput = "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors font-sans";
+  error?: string;
+}> = ({ label, type = "text", placeholder, value, onChange, options, required, error }) => {
+  const baseInput = `w-full bg-white/5 border ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-white/10 focus:border-brand-gold focus:ring-brand-gold'} rounded-lg px-4 py-2.5 md:py-3 text-white placeholder-neutral-600 focus:outline-none focus:ring-1 transition-colors font-sans`;
   
   return (
-    <div className="mb-4">
-      <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">
+    <div className="mb-3">
+      <label className="block text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-500 mb-1.5">
         {label} {required && <span className="text-brand-gold">*</span>}
       </label>
       {options ? (
@@ -116,6 +117,7 @@ export const FormInput: React.FC<{
           onChange={onChange}
         />
       )}
+      {error && <span className="text-xs text-red-500 mt-1 block">{error}</span>}
     </div>
   );
 };
@@ -144,12 +146,12 @@ export const Modal: React.FC<{
         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" 
         onClick={onClose}
       />
-      <div className="relative w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full max-w-lg bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto">
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-neutral-500 hover:text-white transition-colors p-2 z-10"
+          className="absolute top-3 right-3 md:top-4 md:right-4 text-neutral-500 hover:text-white transition-colors p-2 z-10 bg-black/20 rounded-full"
         >
-          <X size={24} />
+          <X size={20} className="md:w-6 md:h-6" />
         </button>
         {children}
       </div>
